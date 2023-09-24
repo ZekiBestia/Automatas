@@ -32,9 +32,9 @@ def buscarP(alfabeto, num):
 
 alfabeto = ['a', 'b','c','d']
 
-numero = 42
+num = 45279
 palabra = buscarP(alfabeto, num)
-print(f'El número {numero} corresponde a la palabra "{palabra}"')
+print(f'El número {num} corresponde a la palabra "{palabra}"')
 
 
 
