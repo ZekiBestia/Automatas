@@ -5,21 +5,23 @@ Spyder Editor
 This is a temporary script file.
 """
 def asignarN(alfabeto, palabra):
-    alfabeto = {letter: idx + 1 for idx, letter in enumerate(alfabeto)}
+    alfabeto = {letra: idx + 1 for idx, letra in enumerate(alfabeto)}
+    print("Se le asigna valores a cada elemeto del alfabeto")
+    print(alfabeto)
     num = 0
-    for letter in palabra:
-        if letter in alfabeto:
-            num = num * len(alfabeto) + alfabeto[letter]
+    for letra in palabra:
+        if letra in alfabeto:
+            num = num * len(alfabeto) + alfabeto[letra]
     return num
 
-alfabeto = ['a', 'b','c','d']
-palabra = "dcdab"
+alfabeto = ['a','b','c','d']
+palabra = "caddc"
 
 num = asignarN(alfabeto, palabra)
 print(f'La palabra "{palabra}" tiene el número {num}')
 
 def buscarP(alfabeto, num):
-    alfabeto = {idx + 1: letter for idx, letter in enumerate(alfabeto)}
+    alfabeto = {idx + 1: letra for idx, letra in enumerate(alfabeto)}
     palabra= ""
     long = len(alfabeto)
 
@@ -32,9 +34,11 @@ def buscarP(alfabeto, num):
 
 alfabeto = ['a', 'b','c','d']
 
-num = 45279
+num = 655
 palabra = buscarP(alfabeto, num)
 print(f'El número {num} corresponde a la palabra "{palabra}"')
+
+
 
 
 
