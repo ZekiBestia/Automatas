@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct  2 15:56:45 2023
+
+@author: zekibestia
+"""
+class Automaton:
+    def __init__(self):
+        self.states = set()
+        self.alphabet = set()
+        self.transitions = {}
+        self.initial_state = None
+        self.accept_states = set()
+
+    def add_state(self, state):
+        if isinstance(state, set):
+            state = list(state)
+        self.states.add(state)
+
+    def add_alphabet(self, symbol):
+        self.alphabet.add(symbol)
+
+    def set_initial_state(self, state):
+        self.initial_state = state
+        self.add_state(state)
+
+    def add_accept_state(self, state):
+        self.accept_states.add(state)
+        self.add_state(state)
+
+    def add_transition(self, from_state, symbol, to_state):
+        if (from_state, symbol) in self.transitions:
+            self.transitions[(from_state, symbol)].append(to_state)
+        else:
+            self.transitions[(from_state, symbol)] = [to_state]
+        self.add_state(from_state)
+        self.add_state(to_state)
+
+    def generate_from_regex(self, regex):
+    # Crea un nuevo estado inicial para el autómata.
+     initial_state = "q1"
+     self.set_initial_state(initial_state)
+
+    # Para cada símbolo del alfabeto en la expresión regular, crea un nuevo estado.
+     for symbol in regex:
+        if symbol not in self.alphabet:
+            self.add_alphabet(symbol)
+
+    # Estado actual y estado siguiente
+     current_state = initial_state
+     next_state = None
+
+     for symbol in regex:
+        if symbol == "|":
+            # Alternancia: crea un nuevo estado y agrega transiciones
+            next_state = "q" + str(len(self.states) + 1)
+            self.add_state(next_state)
+            self.add_transition(current_state, "λ", next_state)
+            current_state = initial_state
+        elif symbol == "*":
+            # Kleene estrella: crea un nuevo estado y agrega transiciones
+            next_state = "q" + str(len(self.states) + 1)
+            self.add_state(next_state)
+            self.add_transition(current_state, "λ", next_state)
+            self.add_transition(next_state, "λ", current_state)
+        else:
+            # Símbolo normal: crea un nuevo estado y agrega una transición
+            next_state = "q" + str(len(self.states) + 1)
+            self.add_state(next_state)
+            self.add_transition(current_state, symbol, next_state)
+            current_state = next_state
+
+    # Marca el último estado como estado de aceptación
+     self.add_accept_state(current_state)
+
+    # Imprime la representación del autómata
+    def print_automaton(self):
+     print("Automata")
+     print("=======>")
+     print(f"Estados : {{{','.join(self.states)}}}")
+     print(f"Inicial: {self.initial_state}")
+     print(f"Aceptacion: {{{','.join(self.accept_states)}}}")
+     print("Transiciones: {")
+     for (from_state, symbol), to_states in self.transitions.items():
+        for to_state in to_states:
+            print(f"   ({from_state},{symbol},{to_state}),")
+     print("}")
+     print("=======>")
+
+
+# Ejemplo de uso
+automaton = Automaton()
+automaton.generate_from_regex("((c|c)b)*")
+automaton.print_automaton()
+

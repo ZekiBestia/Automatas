@@ -14,12 +14,11 @@ class alfabeto:
             num = num * len(alfabeto) + alfabeto[letra]
     return num
 
- '''
  alfabeto = ['a','b','c','d']
- palabra = "caddc"
+ palabra = "aaa"
  num = asignarN(alfabeto, palabra)
  print(f'La palabra "{palabra}" tiene el número {num}')
-'''
+
  @staticmethod
  def buscarP(alfabeto, num):
     alfabeto = {idx + 1: letra for idx, letra in enumerate(alfabeto)}
@@ -32,9 +31,9 @@ class alfabeto:
         num = (num - 1) // long
 
     return palabra
-
- alfabeto = ['a', 'b','c','d']
 '''
+ alfabeto = ['a', 'b','c','d']
+
  num = 655
  palabra = buscarP(alfabeto, num)
  print(f'El número {num} corresponde a la palabra "{palabra}"')
